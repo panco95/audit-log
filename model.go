@@ -1,4 +1,4 @@
-package audit_log
+package audit
 
 type OperateLogs struct {
 	AccountID    uint     `json:"accountId"`

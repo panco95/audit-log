@@ -1,4 +1,4 @@
-package audit_log
+package audit
 
 import (
 	"net/http"
