@@ -1,4 +1,4 @@
-package audit
+package audit_log
 
 import (
 	"log"
