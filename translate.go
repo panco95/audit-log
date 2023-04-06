@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/mitchellh/mapstructure"
-	"github.com/panco95/gin-audit-log/utils"
 )
 
 type MappingField map[string]string
@@ -145,7 +144,7 @@ func GetFieldsLogSlice(beforeFields interface{}, afterFields interface{}, needFi
 	for k := range after {
 		fields = append(fields, k)
 	}
-	fields = utils.RemoveRepeat(fields)
+	fields = removeRepeat(fields)
 	for _, v := range fields {
 		beforeVal, beforeOK := before[v]
 		afterVal, afterOK := after[v]
@@ -181,7 +180,7 @@ func decodeFields(fields interface{}) (map[string]interface{}, error) {
 func translateFields(fields map[string]interface{}) (map[string]interface{}, error) {
 	result := make(map[string]interface{})
 	for key, value := range fields {
-		key = utils.ToSnakeCase(key)
+		key = toSnakeCase(key)
 		if object, ok := fieldMapping[key][lang]; ok {
 			result[object] = value
 		} else {
@@ -194,10 +193,10 @@ func translateFields(fields map[string]interface{}) (map[string]interface{}, err
 func filtrationFields(fieldsMap map[string]interface{}, needFields, expectFields []string) map[string]interface{} {
 	fieldsMapRes := make(map[string]interface{})
 	for key, val := range fieldsMap {
-		if len(needFields) > 0 && utils.Contains(needFields, utils.ToSnakeCase(key)) == -1 {
+		if len(needFields) > 0 && contains(needFields, toSnakeCase(key)) == -1 {
 			continue
 		}
-		if len(expectFields) > 0 && utils.Contains(expectFields, utils.ToSnakeCase(key)) > -1 {
+		if len(expectFields) > 0 && contains(expectFields, toSnakeCase(key)) > -1 {
 			continue
 		}
 		fieldsMapRes[key] = val

@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/panco95/gin-audit-log/utils"
 )
 
 func NewAuditLogGinMiddleware(saveFn func(op *OperateLogs) error) gin.HandlerFunc {
@@ -21,7 +20,7 @@ func NewAuditLogGinMiddleware(saveFn func(op *OperateLogs) error) gin.HandlerFun
 				log.Print("op.(*OperateLogs) err")
 				return
 			}
-			operateLog.IP = utils.ConvIP(c.Request.Header)
+			operateLog.IP = convIP(c.Request.Header)
 			operateLog.AccountID = c.GetUint("id")
 			operateLog.GroupID = c.GetUint("groupId")
 

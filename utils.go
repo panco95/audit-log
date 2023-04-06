@@ -1,4 +1,4 @@
-package utils
+package audit_log
 
 import (
 	"net/http"
@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func Contains(array interface{}, val interface{}) (index int) {
+func contains(array interface{}, val interface{}) (index int) {
 	index = -1
 	switch reflect.TypeOf(array).Kind() {
 	case reflect.Slice:
@@ -24,7 +24,7 @@ func Contains(array interface{}, val interface{}) (index int) {
 	return
 }
 
-func ToSnakeCase(str string) string {
+func toSnakeCase(str string) string {
 	var matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
 	var matchAllCap = regexp.MustCompile("([a-z0-9])([A-Z])")
 	snake := matchFirstCap.ReplaceAllString(str, "${1}_${2}")
@@ -32,7 +32,7 @@ func ToSnakeCase(str string) string {
 	return strings.ToLower(snake)
 }
 
-func RemoveRepeat(slc []string) []string {
+func removeRepeat(slc []string) []string {
 	result := []string{}
 	tempMap := map[string]byte{}
 	for _, e := range slc {
@@ -45,7 +45,7 @@ func RemoveRepeat(slc []string) []string {
 	return result
 }
 
-func ConvIP(header http.Header) string {
+func convIP(header http.Header) string {
 	xff, ok := header["X-Forwarded-For"]
 	if !ok {
 		return "127.0.0.1"
